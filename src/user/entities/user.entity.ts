@@ -15,6 +15,7 @@ export class UserEntity{
     @Column()
      dob: string;
 
+    
     // @Column()
     // phone: number;
 
@@ -26,6 +27,4 @@ export class UserEntity{
 
     @Column()
     role: string;
-
-
 }

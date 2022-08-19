@@ -14,11 +14,13 @@ export class userController{
     @Body('email') email: string,
     @Body('password') password: string,
     @Body('dob') dob: string,
-    @Body('role') role: string
+    @Body('role') role: string,
+    @Body('phone') phone: number,
+
     ){
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        return this.userService.signUp({name, email, password:hashedPassword, dob, role})
+        return this.userService.signUp({name, email, password:hashedPassword, dob, role, phone})
     }
 
 
