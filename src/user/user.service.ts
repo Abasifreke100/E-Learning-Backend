@@ -1,52 +1,68 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { Password } from '@mui/icons-material';
+import { Select } from '@mui/material';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-    import { Repository } from 'typeorm';
-import { UserDto } from './dto/user.dto';
+import { from, map, Observable, switchMap } from 'rxjs';
+import { AuthService } from 'src/auth/auth.service';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { loginUserDto } from './dto/loginUser.dto';
+import { UserEntity } from './entities/user.entity';
+import { User } from "./user.model";
 @Injectable()
-export class UserService {
-constructor(
-  @InjectRepository(User)
-  private userRepository: Repository<User>,
-) {}
+export class UserService{
+    
+    constructor(
+        @InjectRepository(UserEntity) private readonly userRepository: Repository <UserEntity>,
+
+        private authService: AuthService
+
+        ){} 
+
+async signUp(data:any): Promise<UserEntity>{
+    return this.userRepository.save(data);
+}
 
 
-  async create(newUser: CreateUserDto) {
-    const user = this.userRepository.create(newUser)
-    await this.userRepository.save(user)
-    return user 
-    // 'This action adds a new user';
-  }
+         
+// login(loginUsersDto: loginUserDto): Observable<string>{
+// return this.findUserByEmail(loginUsersDto.email).pipe(
+//     switchMap((user: UserEntity) => this.validatePassword(loginUsersDto.password, user.password).pipe(
+//         map((PasswordsMatches: boolean) => {
+//             if(PasswordsMatches){
+//                 return 'login was successful'
+//             } else {
+//                 throw new HttpException('login was successful', HttpStatus.UNAUTHORIZED);
+//             }
+//         })
+//     )
+//     ) 
+// )
+// }
 
-  async findAll():Promise<User[]> {
-    return await this.userRepository.find() 
-    // `This action returns all users`;
-  }
-  async findByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne({
-      where: {
-        email: email,
-      },
-    });
-  }
+//         findAll(): Observable<UserEntity[]> {
+//             return from(this.userRepository.find());
+//         }
+
+//         findUserByEmail(email: string): Observable<UserEntity>{
+//             return from(this.userRepository.findOneBy({email}));
+//         }
 
 
-  async findOne(id: string):Promise<User> {
-    return  await this.userRepository.findOneBy({id});
-    //  `This action returns a #${id} user`;
-  }
+//     validatePassword(password: string, storedPasswordHash: string): Observable<boolean>{
+//     return this.authService.comparePasswords(password, storedPasswordHash)
+//     }
 
-  async update(id: string, UserDto: UserDto):Promise<User> {
-    await this.userRepository.update({ id }, UserDto);
-    return await this.userRepository.findOne({ where: { id: id }});
-    // return `This action updates a #${id} user`;
-  }
-
-  async remove(id: string) {
-    await this.userRepository.delete({ id });
-    return { deleted: true };
-    // return `This action removes a #${id} user`;
-  }
+//     private mailExists(email: string ): Observable <boolean>{
+//         return from (this.userRepository.findOneBy({email})).pipe(
+//             map((user: User)=> {
+//                 if(!user){
+//                     return true;
+//                 } else{
+//                     return false;
+//                 }
+//             })
+//         )
+//     }
+// } 
 }
