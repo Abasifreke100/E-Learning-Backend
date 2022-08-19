@@ -1,23 +1,24 @@
+import { Select } from '@mui/material';
 import { Entity, Column, PrimaryGeneratedColumn, } from 'typeorm';
 
 
 
-@Entity("user")
-export class User {
-
-    @PrimaryGeneratedColumn('uuid')
+@Entity('users')
+export class UserEntity{
+  
+    @PrimaryGeneratedColumn()
     id: string;
 
     @Column()
     name: string;
 
     @Column()
-    dob: string;
+     dob: string;
 
-    @Column()
-    phone: number;
+    // @Column()
+    // phone: number;
 
-    @Column()
+    @Column({unique: true})
     email: string;
 
     @Column()

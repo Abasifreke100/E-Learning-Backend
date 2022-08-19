@@ -1,35 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserDto } from './dto/user.dto';
-import { User } from './User.model';
-@Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
+import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
+import { loginUserDto } from "./dto/loginUser.dto";
+import { UserService } from "./user.service";
+import *as bcrypt from 'bcrypt';
 
-  @Get("/")
-  findAll():Promise<User[]> {
-    return this.userService.findAll();
-  }
+@Controller('users')
+export class userController{
+    constructor (private userService: UserService){}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
-  }
+    @Post('signup')
+   async SignUp(
+    @Body('name') name: string,
+    @Body('email') email: string,
+    @Body('password') password: string,
+    @Body('dob') dob: string,
+    @Body('role') role: string
+    ){
+        const hashedPassword = await bcrypt.hash(password, 12);
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() user:UserDto) {
-    return this.userService.update(id, user);
-  }
+        return this.userService.signUp({name, email, password:hashedPassword, dob, role})
+    }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
-  }
+
+    // @Post('login')
+    // @HttpCode(200)
+    // login(@Body() loginUsersDto: loginUserDto):Observable<string>{
+    //     return this.userService.login(loginUsersDto)
+    // }
+
+    // @Get()
+    // findAll(): Observable<User[]>{
+    //     return
+    // }
+
 }

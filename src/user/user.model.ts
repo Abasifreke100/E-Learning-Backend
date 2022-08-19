@@ -7,7 +7,7 @@ export class User{
         public phone: number,
         public email:string,
        public password:string,
-       public role:string
+       public role:string,
 
         ){}
 }
