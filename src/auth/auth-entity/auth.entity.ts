@@ -16,17 +16,5 @@ export class authEntity{
     @Column()
     password: string;
 
-    @Column()
-    dob: string;
     
-    @Column({
-        type: "bigint"
-    })
-    @IsMobilePhone()
-    @Min(0)
-    @Max(20)
-    phone: number
-
-    @Column()
-    role: string;
 }

@@ -1,13 +1,16 @@
-import {  BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
+import {  BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 // import RESPONSE from express
 import { Request, Response, response } from 'express';
 import { PassThrough } from 'stream';
+import { GoogleAuthGuard } from './utils/Guards';
 
 @Controller('api')
 export class AuthController {
+    
+
     constructor(private readonly signUpServices: AuthService, private jwtService: JwtService){}
 
     //Signup a new user
@@ -16,9 +19,7 @@ export class AuthController {
         @Body('name')name: string,
         @Body('email')email: string,
         @Body('password')password: string,
-        @Body('dob')dob: string,
-        @Body('phone')phone: string,
-        @Body('role')role: string
+       
     ){
         // hashing the password
         const hashPassword = await bcrypt.hash(password, 12); 
@@ -27,9 +28,7 @@ export class AuthController {
             name,
             email,
             password:hashPassword,
-            dob,
-            phone,
-            role
+           
         });
 
         delete signupUser.password;
@@ -118,4 +117,5 @@ export class AuthController {
             message: "You have succesfully logout"
         };
     }
+
 }
