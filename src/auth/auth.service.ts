@@ -1,14 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { userDetails } from '../google/utils/type';
+
 import { Userr } from './User/user';
 import { UserEntity } from './User/user.entity';
 
 @Injectable()
 export class AuthService {
+    
     findOneBy: any;
+    validateUser: any;
 
     constructor(@InjectRepository(UserEntity,) private readonly signupRepository: Repository<UserEntity>,
    
@@ -26,9 +29,9 @@ export class AuthService {
         return this.signupRepository.findOneBy(userDetails);
     }
 
-// //Google Login
-//     validateUser(details: userDetails){
-//         console.log('AuthService');
-//         console.log('details');
-//     }
+async update(id: number, data: any):Promise<any>{
+    return this.signupRepository.update(id, data);
+}
+
+
 }

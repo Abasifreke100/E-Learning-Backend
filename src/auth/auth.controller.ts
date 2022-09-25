@@ -4,14 +4,14 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 // import RESPONSE from express
 import { Request, Response, response } from 'express';
-import { PassThrough } from 'stream';
-import { GoogleAuthGuard } from '../google/utils/Guards';
+
 
 @Controller('api')
 export class AuthController {
     
 
-    constructor(private readonly signUpServices: AuthService, private jwtService: JwtService){}
+    constructor(private readonly signUpServices: AuthService, private jwtService: JwtService
+        ){}
 
     //Signup a new user
     @Post('signup')
@@ -66,6 +66,7 @@ export class AuthController {
         // sign in the JWT token here
         const jwt = await this.jwtService.signAsync({id: loginUser.id}); //sending only the ID of the loginUser on JWT
 
+        
         // this mean that the frontent won't be able to access the JWT, only the Backend alone to access the JWT
         response.cookie('jwt', jwt, {httpOnly:true});
 
@@ -118,4 +119,7 @@ export class AuthController {
         };
     }
 
-}
+} 
+ 
+
+

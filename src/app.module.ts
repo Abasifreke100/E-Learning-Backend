@@ -11,6 +11,8 @@ import { PassportModule } from '@nestjs/passport';
 
 import { UserEntity } from './auth/User/user.entity';
 import { GoogleModule } from './google/google.module';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { PasswordEntity } from './forgot-password/password.entity';
 
 
 
@@ -31,11 +33,11 @@ import { GoogleModule } from './google/google.module';
       port: 3307,
       username: 'root',
       password: '',
-      database: 'amen',
-      entities: [UserEntity, Userr],
+      database: 'password',
+      entities: [UserEntity, Userr, PasswordEntity],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity, Userr]),
+    TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity]),
 
     // regigering the JWT token in the module
     JwtModule.register({
@@ -45,6 +47,7 @@ import { GoogleModule } from './google/google.module';
     }),
     PassportModule.register({session: true}),
     GoogleModule,
+    ForgotPasswordModule,
     
   ],
  
