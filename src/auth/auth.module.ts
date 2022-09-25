@@ -2,31 +2,28 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 // import { jwtConstants } from './constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { authEntity } from './auth-entity/auth.entity';
+
 import { AuthController } from './auth.controller';
 // import { AuthEntity } from './auth-entity/auth.entity';
 // import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import {MailerModule} from '@nestjs-modules/mailer'
-import { GoogleStrategy } from './utils/GoogleStrategy';
+
+import { GoogleStrategy } from 'src/google/utils/GoogleStrategy';
 import { Userr } from './User/user';
-import { GoogleController } from './google/google.controller';
-import { GoogleService } from './google/google.service';
+import { GoogleController } from '../google/google.controller';
+// import { GoogleService } from './google/google.service';
+import { GoogleService } from 'src/google/google.service';
 import { PassportModule } from '@nestjs/passport';
-import { SessionSerializer } from './utils/serializer';
+// import { SessionSerializer } from './utils/serializer';
+import { SessionSerializer } from 'src/google/utils/serializer';
+import { UserEntity } from './User/user.entity';
 
 
 @Module({
   imports: [
-// MailerModule.forRoot({
-//   transport: {
-//     host: 'smtp.sendgrid.net',
-//     auth:{
-//       user: 'apikey',
-//       pass: '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'
-//     }
-//   }
-// }),
+
+AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -34,10 +31,10 @@ import { SessionSerializer } from './utils/serializer';
       username: 'root',
       password: '',
       database: 'amen',
-      entities: [authEntity, Userr],
+      entities: [UserEntity, Userr],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([authEntity, Userr]),
+    TypeOrmModule.forFeature([UserEntity, Userr]),
 
     // regigering the JWT token in the module
     JwtModule.register({
@@ -53,6 +50,8 @@ import { SessionSerializer } from './utils/serializer';
     provide: 'Google_Service',
     useClass: GoogleService
   }],
+  exports: [AuthService]
 })
+
 export class AuthModule {}
 

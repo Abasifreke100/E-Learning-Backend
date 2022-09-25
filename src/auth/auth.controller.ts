@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 // import RESPONSE from express
 import { Request, Response, response } from 'express';
 import { PassThrough } from 'stream';
-import { GoogleAuthGuard } from './utils/Guards';
+import { GoogleAuthGuard } from '../google/utils/Guards';
 
 @Controller('api')
 export class AuthController {

@@ -3,7 +3,7 @@ import {  IsMobilePhone, Max, Min } from "class-validator";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('auth')
-export class authEntity{
+export class UserEntity{
     @PrimaryGeneratedColumn()
     id: number;
 

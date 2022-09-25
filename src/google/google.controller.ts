@@ -1,10 +1,14 @@
 import { Controller, Get, Req, UseGuards } from "@nestjs/common";
 import { Request } from "express";
-import { GoogleAuthGuard } from "../utils/Guards";
+import { GoogleAuthGuard } from "./utils/Guards";
 
 @Controller('api')
 export class GoogleController {
 
+
+
+
+  
 @Get('google/login')
     @UseGuards(GoogleAuthGuard)
   handleLogin(){
