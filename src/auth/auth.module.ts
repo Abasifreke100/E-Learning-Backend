@@ -19,11 +19,21 @@ import { SessionSerializer } from 'src/google/utils/serializer';
 import { UserEntity } from './User/user.entity';
 import { ForgotPasswordModule } from 'src/forgot-password/forgot-password.module';
 import { PasswordEntity } from 'src/forgot-password/password.entity';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 
 
 @Module({
   imports: [
+    MailerModule.forRoot({
+      transport:{
+        host: '0.0.0.0',
+        port: 1025
+      },
+      defaults:{
+        from: 'akpanmbietidughe@gmail.com'
+      }
+    }),
     forwardRef(() => ForgotPasswordModule),
 
     TypeOrmModule.forRoot({

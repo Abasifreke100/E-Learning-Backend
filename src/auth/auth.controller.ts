@@ -2,15 +2,17 @@ import {  BadRequestException, Body, Controller, Get, HttpException, HttpStatus,
 import { AuthService } from './auth.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-// import RESPONSE from express
 import { Request, Response, response } from 'express';
-
+import { MailerService } from '@nestjs-modules/mailer';
+import { url } from 'inspector';
 
 @Controller('api')
 export class AuthController {
     
 
-    constructor(private readonly signUpServices: AuthService, private jwtService: JwtService
+    constructor(private readonly signUpServices: AuthService, private jwtService: JwtService,
+    private mailerService: MailerService
+
         ){}
 
     //Signup a new user
@@ -22,18 +24,30 @@ export class AuthController {
        
     ){
         // hashing the password
-        const hashPassword = await bcrypt.hash(password, 12); 
+        const hashPassword = await bcrypt.hash(password, 3); 
 
-        const signupUser = await this.signUpServices.signup({
+        // const token = Math.random().toString(20).substr(2, 20)
+
+  await this.signUpServices.signup({
             name,
             email,
             password:hashPassword,
            
         });
 
-        delete signupUser.password;
+        const url = `http://localhost:2000/confirm_mail/${hashPassword}`;
+        await this.mailerService.sendMail({
+            from:"akpanmbietidughe@gmail.com",
+            to: email,
+            subject: 'Login Confirmation mail!',
+            html: ` <a href="${url}"></a> `
+        })
 
-        return signupUser;
+        
+
+        return {
+            msg: 'Check your email'
+        }
 
         
     }
