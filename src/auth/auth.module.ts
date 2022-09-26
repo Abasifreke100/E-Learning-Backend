@@ -20,6 +20,7 @@ import { UserEntity } from './User/user.entity';
 import { ForgotPasswordModule } from 'src/forgot-password/forgot-password.module';
 import { PasswordEntity } from 'src/forgot-password/password.entity';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { GoogleEntity } from 'src/google/google.entity';
 
 
 
@@ -46,7 +47,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
       entities: [UserEntity, Userr, PasswordEntity ],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity ]),
+    TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity, GoogleEntity]),
 
     // regigering the JWT token in the module
     JwtModule.register({

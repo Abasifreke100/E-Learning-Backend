@@ -13,6 +13,7 @@ import { UserEntity } from './auth/User/user.entity';
 import { GoogleModule } from './google/google.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { PasswordEntity } from './forgot-password/password.entity';
+import { GoogleEntity } from './google/google.entity';
 
 
 
@@ -34,7 +35,7 @@ import { PasswordEntity } from './forgot-password/password.entity';
       username: 'root',
       password: '',
       database: 'password',
-      entities: [UserEntity, Userr, PasswordEntity],
+      entities: [UserEntity, Userr, PasswordEntity, GoogleEntity],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity]),

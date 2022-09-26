@@ -35,12 +35,13 @@ export class AuthController {
            
         });
 
-        const url = `http://localhost:2000/confirm_mail/${hashPassword}`;
+
+        const url = `${name}/confirm_mail/${hashPassword}`;
         await this.mailerService.sendMail({
             from:"akpanmbietidughe@gmail.com",
             to: email,
-            subject: 'Login Confirmation mail!',
-            html: ` <a href="${url}"></a> `
+            subject: 'signUp Confirmation mail!',
+            html: ` <a href="${url}">Proceed with the login</a> `
         })
 
         
