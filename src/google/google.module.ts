@@ -8,7 +8,7 @@ import { SessionSerializer } from 'src/google/utils/serializer';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/auth/User/user.entity';
 import { PasswordEntity } from 'src/forgot-password/password.entity';
-import { Userr } from 'src/auth/User/user';
+import { Userr } from 'src/google/utils/user';
 import { GoogleEntity } from './google.entity';
 import { MailerModule } from '@nestjs-modules/mailer';
 
@@ -20,7 +20,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
       port: 1025
     },
     defaults:{
-      from: 'akpanmbietidughe@gmail.com'
+      from: 'startinnovation@gmail.com'
     }
   }),
   TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity, GoogleEntity]),],

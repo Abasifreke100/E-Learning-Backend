@@ -5,6 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import { Request, Response, response } from 'express';
 import { MailerService } from '@nestjs-modules/mailer';
 import { url } from 'inspector';
+import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuard } from './local-auth.guards';
 
 @Controller('api')
 export class AuthController {
@@ -16,8 +18,11 @@ export class AuthController {
         ){}
 
     //Signup a new user
+  
+    // @UseGuards(AuthGuard)
     @Post('signup')
     async signUp(
+       
         @Body('name')name: string,
         @Body('email')email: string,
         @Body('password')password: string,
@@ -26,34 +31,42 @@ export class AuthController {
         // hashing the password
         const hashPassword = await bcrypt.hash(password, 3); 
 
-        // const token = Math.random().toString(20).substr(2, 20)
+        //  const token = Math.random().toString(20).substr(2, 20)
 
-  await this.signUpServices.signup({
+  const signup = await this.signUpServices.signup({
             name,
             email,
             password:hashPassword,
            
         });
 
+        if(!signup){
+            throw new HttpException('invalid details', 404)
+        }
 
-        const url = `${name}/confirm_mail/${hashPassword}`;
+
+        const url = `http://localhost:3000/confirm_mail/${hashPassword}`;
         await this.mailerService.sendMail({
-            from:"akpanmbietidughe@gmail.com",
+            from:"startinnovation@gmail.com",
             to: email,
             subject: 'signUp Confirmation mail!',
             html: ` <a href="${url}">Proceed with the login</a> `
         })
 
         
+        
 
-        return {
-            msg: 'Check your email'
+        return{
+            msg: 'signup successful',
+            "statusCode": 200
+        
         }
 
         
     }
 
     // Login a registered user
+   
     @Post('login')
     async login(
         @Body('email') email: string,
@@ -68,12 +81,14 @@ export class AuthController {
         
         // checking if there's any Loginuser
         if(!loginUser){
-            throw new BadRequestException('No credentials');
+            
+
+            throw new HttpException('invalid credentials', 404)
         }
         
         // comparing the bcrypt password
         if(!await bcrypt.compare(password, loginUser.password)){
-            throw new BadRequestException('No credentials');
+            throw new HttpException('invalid credentials', 404)
         }
             //WHEN  RETURNING USER DETAILS WIHTOUT JWT TOKEN
         // return loginUser;
@@ -81,19 +96,23 @@ export class AuthController {
         // sign in the JWT token here
         const jwt = await this.jwtService.signAsync({id: loginUser.id}); //sending only the ID of the loginUser on JWT
 
+     
         
         // this mean that the frontent won't be able to access the JWT, only the Backend alone to access the JWT
         response.cookie('jwt', jwt, {httpOnly:true});
 
         return{
-            message: 'successfully login'
+            message: 'successfully logged in',
+            "statusCode": 200
         };
 
         // when returning only the JWT token
-        // return jwt;        
+        // return jwt;         
     }
 
-    // adding an authenticated
+    
+    
+    
     @Get('user')
     async user(@Req()request:Request){
 

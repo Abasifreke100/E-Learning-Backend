@@ -1,10 +1,9 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-
-import { Userr } from './auth/User/user';
+import { Userr } from './google/utils/user';
 
 import { PassportModule } from '@nestjs/passport';
 
@@ -14,20 +13,14 @@ import { GoogleModule } from './google/google.module';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { PasswordEntity } from './forgot-password/password.entity';
 import { GoogleEntity } from './google/google.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 
 @Module({
   imports: [
-// MailerModule.forRoot({
-//   transport: {
-//     host: 'smtp.sendgrid.net',
-//     auth:{
-//       user: 'apikey',
-//       pass: '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'
-//     }
-//   }
-// }),
+    AuthModule,
+
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -38,7 +31,7 @@ import { GoogleEntity } from './google/google.entity';
       entities: [UserEntity, Userr, PasswordEntity, GoogleEntity],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity]),
+    TypeOrmModule.forFeature([UserEntity, Userr, PasswordEntity, GoogleEntity]),
 
     // regigering the JWT token in the module
     JwtModule.register({
@@ -48,7 +41,8 @@ import { GoogleEntity } from './google/google.entity';
     }),
     PassportModule.register({session: true}),
     GoogleModule,
-    ForgotPasswordModule,
+    forwardRef(() => ForgotPasswordModule),
+  
     
   ],
  

@@ -11,12 +11,10 @@ export class UserEntity{
     @Column()
     name: string;
 
-    @IsString()
+
     @Column({unique: true})
     email: string;
-
-
-    @IsString()
+  
     @Column()
     password: string;
 

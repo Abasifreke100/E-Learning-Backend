@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { userDetails } from '../google/utils/type';
 
-import { Userr } from './User/user';
+import { Userr } from '../google/utils/user';
 import { UserEntity } from './User/user.entity';
 
 @Injectable()

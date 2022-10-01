@@ -34,7 +34,9 @@ handleRedirect(){
 user(@Req() request: Request) {
   console.log(request.user);
   if(request.user){
-    return request.user;
+    return{
+      msg: 'Authenticated'
+    }
 
     }else{
       return{

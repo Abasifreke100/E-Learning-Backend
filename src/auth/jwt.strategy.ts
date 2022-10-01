@@ -10,7 +10,7 @@ constructor(){
     super({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         ignoreExpiration: false,
-        secretOrKey: ''
+        secretOrKey: 'secret'
     });
 }
 

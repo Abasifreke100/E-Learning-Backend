@@ -17,6 +17,8 @@ export class ForgotPasswordController {
       email,
       token
     });
+
+    
     return forgot;
 
   }
