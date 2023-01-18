@@ -1,37 +1,30 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import * as cookieParser from 'cookie-parser';
-import { AuthModule } from './auth/auth.module';
-import * as session from 'express-session';
-import * as passport from 'passport'
+import { AppModule } from './app.module';
+import { config } from 'dotenv';
+import * as morgan from 'morgan';
 
-
-
+config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AuthModule);
-  
-  app.use(session({
-    secret: 'unique',
-    saveUninitialized: false,
-    resave: false,
-    cookie: {
-      maxAge: 60000,
-    }
-  }),
-  );
+  const app = await NestFactory.create(AppModule);
 
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  // add this configuration so the frontend can retrieve our logged in users 
+  /**
+   * cors configuration
+   */
   app.enableCors({
-    origin: 'http://localhost:4000',
-    credentials: true
+    origin: '*',
+    credentials: true,
   });
 
-  app.use(cookieParser());
+  /**
+   * morgan logger for development
+   */
+  if(process.env.APP_IN_DEVELOPMENT == 'true'){
+    app.use(morgan('combined'))
+  }
+
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(2000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
