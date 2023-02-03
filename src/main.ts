@@ -1,10 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { config } from 'dotenv';
 import * as morgan from 'morgan';
-
-config();
+import { ENVIRONMENT } from './common/config/environment';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,11 +18,16 @@ async function bootstrap() {
   /**
    * morgan logger for development
    */
-  if(process.env.APP_IN_DEVELOPMENT == 'true'){
+  if(ENVIRONMENT.APP.IN_DEVELOPMENT == 'true'){
     app.use(morgan('combined'))
   }
 
+  /**
+   * prefix
+   */
+  app.setGlobalPrefix('/api/v1')
+
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(ENVIRONMENT.APP.PORT || 3000);
 }
 bootstrap();
