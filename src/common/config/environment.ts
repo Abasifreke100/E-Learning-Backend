@@ -4,7 +4,8 @@ dotenv.config()
 interface IEnvironment {
     APP: {
         PORT: string,
-        IN_DEVELOPMENT: string
+        IN_DEVELOPMENT: string,
+        BACKEND_URL: string
     },
     GOOGLE: {
         CLIENT_ID: string,
@@ -20,7 +21,8 @@ interface IEnvironment {
 export const ENVIRONMENT: IEnvironment = {
     APP: {
         PORT: process.env.PORT,
-        IN_DEVELOPMENT: process.env.APP_IN_DEVELOPMENT
+        IN_DEVELOPMENT: process.env.APP_IN_DEVELOPMENT,
+        BACKEND_URL: process.env.APP_BACKEND_URL
     },
     GOOGLE: {
         CLIENT_ID: process.env.GOOGLE_CLIENT_ID,

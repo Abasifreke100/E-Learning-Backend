@@ -5,7 +5,6 @@ import { typeOrmConfig } from './common/config/typeorm.config';
 import { AllExceptionsFilter } from './common/exceptions/all-exceptions.filter';
 import { AuthModule } from './modules/v1/auth/auth.module';
 import { MailModule } from './modules/v1/mail/mail.module';
-import { OtpModule } from './modules/v1/otp/otp.module';
 import { UserModule } from './modules/v1/user/user.module';
 
 @Module({
@@ -14,7 +13,6 @@ import { UserModule } from './modules/v1/user/user.module';
     AuthModule,
     UserModule,
     MailModule,
-    OtpModule
   ],
   providers: [
     {

@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 
 export const helperFunction = {
     hashPassword: (password: string) => {
