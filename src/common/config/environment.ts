@@ -15,6 +15,11 @@ interface IEnvironment {
         HOST: string,
         USER: string,
         PASSWORD: string
+    },
+    JWT: {
+        SECRET: string,
+        ACCOUNT_VERIFICATION_SECRET: string,
+        ACCOUNT_VERIFICATION_EXP_TIME: number
     }
 }
 
@@ -32,5 +37,10 @@ export const ENVIRONMENT: IEnvironment = {
         HOST: process.env.SMTP_HOST,
         USER: process.env.SMTP_USER,
         PASSWORD: process.env.SMTP_PASS
+    },
+    JWT: {
+        SECRET: process.env.JWT_SECRET,
+        ACCOUNT_VERIFICATION_SECRET: process.env.JWT_ACCOUNT_VERIFICATON_SECRET,
+        ACCOUNT_VERIFICATION_EXP_TIME: +process.env.JWT_ACCOUNT_VERIFICATON_SECRET_EXPIRATION_TIME
     }
 }

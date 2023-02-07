@@ -9,7 +9,7 @@ export class ResponseMessage implements IResponseMessage{
     public data?:  any;
     public message?: string;
 
-    constructor(success: boolean, data: any, message: string){
+    constructor(success: boolean, data?: any, message?: string){
         // removes password
          if(data?.password){
             delete data["password"]
