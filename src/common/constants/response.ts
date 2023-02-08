@@ -15,6 +15,11 @@ export class ResponseMessage implements IResponseMessage{
             delete data["password"]
         }
 
+        // removes refresh token
+        if(data?.currentHashedRefreshToken){
+            delete data['currentHashedRefreshToken']
+        }
+
         this.success = success;
         this.data = data ? data : null;
         this.message = message ? message : null;

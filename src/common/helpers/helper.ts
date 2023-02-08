@@ -2,15 +2,15 @@ import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 
 export const helperFunction = {
-    hashPassword: (password: string) => {
-        return bcrypt.hash(password, 10);
-    },
+  hashData: (data: string) => {
+    return bcrypt.hash(data, 10);
+  },
 
-    comparePassword: (password: string, hashPassword: string) => {
-        return bcrypt.compare(password, hashPassword);
-    },
+  compareHashedData: (data: string, hashedData: string) => {
+    return bcrypt.compare(data, hashedData);
+  },
 
-    generateRandomString: (length: number) => {
-        return crypto.randomBytes(length).toString('hex')
-    } 
-} 
+  generateRandomString: (length: number) => {
+    return crypto.randomBytes(length).toString('hex');
+  },
+};
