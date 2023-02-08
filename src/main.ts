@@ -3,7 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as morgan from 'morgan';
 import { ENVIRONMENT } from './common/config/environment';
-import { JwtAuthGuard } from './modules/v1/auth/guards/jwt-auth.guard';
+import * as cookieParser from 'cookie-parser'
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -32,6 +33,8 @@ async function bootstrap() {
    * pipes
    */
   app.useGlobalPipes(new ValidationPipe());
+
+  // app.use(cookieParser())
 
   await app.listen(ENVIRONMENT.APP.PORT || 3000);
 }
