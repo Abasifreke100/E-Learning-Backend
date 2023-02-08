@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as morgan from 'morgan';
 import { ENVIRONMENT } from './common/config/environment';
+import { JwtAuthGuard } from './modules/v1/auth/guards/jwt-auth.guard';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -26,12 +27,6 @@ async function bootstrap() {
    */
   app.setGlobalPrefix('/api/v1')
 
-
-  /**
-   * exceptions 
-   */
-  // const {httpAdapter} = app.get(HttpAdapterHost)
-  // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter))
 
   /**
    * pipes

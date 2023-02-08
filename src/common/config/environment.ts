@@ -18,6 +18,8 @@ interface IEnvironment {
     },
     JWT: {
         SECRET: string,
+        REFRESH_TOKEN_SECRET: string,
+        REFRESH_TOKEN_EXP_TIME: number,
         ACCOUNT_VERIFICATION_SECRET: string,
         ACCOUNT_VERIFICATION_EXP_TIME: number
     }
@@ -40,6 +42,8 @@ export const ENVIRONMENT: IEnvironment = {
     },
     JWT: {
         SECRET: process.env.JWT_SECRET,
+        REFRESH_TOKEN_SECRET: process.env.JWT_REFRESH_TOKEN_SECRET,
+        REFRESH_TOKEN_EXP_TIME: +process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
         ACCOUNT_VERIFICATION_SECRET: process.env.JWT_ACCOUNT_VERIFICATON_SECRET,
         ACCOUNT_VERIFICATION_EXP_TIME: +process.env.JWT_ACCOUNT_VERIFICATON_SECRET_EXPIRATION_TIME
     }
